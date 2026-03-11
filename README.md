@@ -1,5 +1,7 @@
 # Neo's ESLint Plugin
 
+[![NPM Version](https://img.shields.io/npm/v/@neos21/neos-eslint-plugin.svg)](https://www.npmjs.com/package/@neos21/neos-eslint-plugin) [![GPR Version](https://img.shields.io/github/package-json/v/neos21/neos-eslint-plugin?label=github)](https://github.com/Neos21/neos-eslint-plugin/pkgs/npm/neos-eslint-plugin)
+
 オレオレ ESLint プラグイン集。
 
 
