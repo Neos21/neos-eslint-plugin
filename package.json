@@ -1,0 +1,52 @@
+{
+  "name": "@neos21/neos-eslint-plugin",
+  "version": "0.0.1",
+  "description": "Neo's ESLint Plugins",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "README.md",
+    "LICENSE",
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --noEmit && tsup",
+    "test": "npm run build && npx tsx ./tests/test.ts",
+    "eslint": "eslint",
+    "tsc": "tsc",
+    "tsup": "tsup"
+  },
+  "author": "Neo <neos21@gmail.com> (https://neos21.net/)",
+  "license": "MIT",
+  "homepage": "https://github.com/Neos21/neos-eslint-plugin#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Neos21/neos-eslint-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Neos21/neos-eslint-plugin/issues"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/Neos21"
+  },
+  "peerDependencies": {
+    "eslint": ">=9.0.0"
+  },
+  "devDependencies": {
+    "@types/eslint": "9.6.1",
+    "@types/node": "25.4.0",
+    "eslint": "10.0.3",
+    "jiti": "2.6.1",
+    "tsup": "8.5.1",
+    "typescript": "5.9.3"
+  }
+}

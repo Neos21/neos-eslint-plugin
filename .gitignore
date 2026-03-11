@@ -1,0 +1,11 @@
+.DS_Store
+Thumbs.db
+
+node_modules/
+
+# For .gitignore
+
+tests/test-file.ts
+*.tsbuildinfo
+
+dist/

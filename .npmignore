@@ -1,0 +1,14 @@
+.DS_Store
+Thumbs.db
+
+node_modules/
+
+# For .npmignore
+
+.gitignore
+tsconfig.json
+tsup.config.ts
+
+.github/workflows/
+src/
+tests/

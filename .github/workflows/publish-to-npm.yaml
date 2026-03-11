@@ -1,0 +1,26 @@
+name: Publish To npm
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+jobs:
+  publish-to-npm:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write  # for npm OIDC https://eiji.page/blog/npm-trusted-publishing/
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Use Node.js And Setup .npmrc
+        uses: actions/setup-node@v6
+        with:
+          node-version: latest
+          registry-url: 'https://registry.npmjs.org'
+      - name: Install
+        run : npm install
+      - name: Build
+        run : npm run build
+      - name: Publish
+        run : npm publish --provenance --access=public
