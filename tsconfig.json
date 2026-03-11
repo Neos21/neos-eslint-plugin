@@ -1,0 +1,32 @@
+{
+  // 型チェック対象とするファイル
+  "include": ["src/**/*"],
+  // 型チェック対象外とするディレクトリ
+  "exclude": ["node_modules", "dist", "tests"],
+  "compilerOptions": {
+    // コンパイル時に使用する標準ライブラリ
+    "lib": ["ES2020"],
+    // 出力する JavaScript のバージョン
+    "target": "ES2020",
+    // 出力するモジュール形式
+    "module": "ESNext",
+    // モジュールの解決方法
+    "moduleResolution": "Bundler",
+    // ルートディレクトリ
+    "rootDir": "./src",
+    // 出力先ディレクトリ
+    "outDir": "./dist",
+    // CommonJS モジュールを ESModules として扱いやすくする
+    "esModuleInterop": true,
+    // `.d.ts` ファイルのチェックをスキップする
+    "skipLibCheck": true,
+    // `export` したものの型定義ファイルをファイルごとに作成する
+    "declaration": true,
+    // 型定義のマップファイル `.d.ts.map` を生成する
+    "declarationMap": true,
+    // JavaScript ファイルに対するマップファイルを生成する
+    "sourceMap": true,
+    // 厳格な型チェックを行う
+    "strict": true
+  }
+}
