@@ -13,7 +13,7 @@ $ npm install --save-dev @neos21/neos-eslint-plugin
 
 ESLint v9 以降の Flat Config を前提としています。
 
-- `eslint.config.ts` : 使用したいルールだけを `rules` に記載し、`warn` または `error` を指定します
+- `eslint.config.ts` (or ESM) : 使用したいルールだけを `rules` に記載し、`warn` または `error` を指定します
 
 ```typescript
 import neosEslintPlugin from '@neos21/neos-eslint-plugin';
@@ -54,6 +54,14 @@ export default [
   { files: ['src/**/*.{js,jsx,ts,tsx}'] },
   neosEslintPlugin.configs.warn
 ];
+```
+
+CommonJS での利用時は `.default` を付けて `require()` してください。後の書き方は同じです。
+
+```javascript
+const neosEslintPlugin = require('@neos21/neos-eslint-plugin').default;
+
+module.exports = [...];
 ```
 
 
