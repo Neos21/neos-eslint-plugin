@@ -15,14 +15,6 @@ jobs:
         with:
           node-version: latest
           registry-url: 'https://npm.pkg.github.com'
-          scope       : '@neos21'
-          always-auth : true
-        env :
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Can npm Publish
-        run : |
-          npm install can-npm-publish
-          npx can-npm-publish --verbose
         env :
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Install

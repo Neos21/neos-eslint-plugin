@@ -10,8 +10,8 @@ const pluginName = 'neos-eslint-plugin' as const;
 
 /** ルール一覧 */
 const rules = {
-  'doc-comment-format'      : docCommentFormat,
   'blank-line-indent'       : blankLineIndent,
+  'doc-comment-format'      : docCommentFormat,
   'newline-before-statement': newlineBeforeStatement,
   'no-space-before-paren'   : noSpaceBeforeParen
 };
