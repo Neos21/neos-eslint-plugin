@@ -81,3 +81,4 @@ export default [
 ## Links
 
 - [Neo's World](https://neos21.net/)
+- [npm - @neos21/neos-eslint-plugin](https://www.npmjs.com/package/@neos21/neos-eslint-plugin)
