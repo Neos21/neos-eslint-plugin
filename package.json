@@ -20,7 +20,7 @@
   "scripts": {
     "build": "tsc --noEmit && tsup",
     "lint": "eslint ./src/ --fix",
-    "test": "tsx ./tests/test.ts",
+    "test": "npm run build && tsx ./tests/test.ts",
     "eslint": "eslint",
     "tsc": "tsc",
     "tsup": "tsup"

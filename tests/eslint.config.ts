@@ -2,8 +2,12 @@ import neosEslintPlugin from '../dist/index.mjs';
 
 // テスト用の ESLint ファイル
 export default [
+  { files: ['tests/**/*.ts'] },
+  neosEslintPlugin.configs.recommended
+  
+  //neosEslintPlugin.configs.warn
+  
   //{
-  //  files: ['tests/test-file.ts'],
   //  plugins: {
   //    'neos-eslint-plugin': neosEslintPlugin
   //  },
@@ -13,11 +17,5 @@ export default [
   //    'neos-eslint-plugin/newline-before-statement': 'error',
   //    'neos-eslint-plugin/no-space-before-paren'   : 'error'
   //  }
-  //},
-  
-  { files: ['tests/test-file.ts'] },
-  neosEslintPlugin.configs.recommended
-  
-  //{ files: ['tests/test-file.ts'] },
-  //neosEslintPlugin.configs.warn
+  //}
 ];

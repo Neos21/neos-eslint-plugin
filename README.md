@@ -26,6 +26,7 @@ export default [
     },
     rules: {
       'neos-eslint-plugin/blank-line-indent'       : 'error',
+      'neos-eslint-plugin/comment-colon-spacing'   : 'error',
       'neos-eslint-plugin/doc-comment-format'      : 'error',
       'neos-eslint-plugin/newline-before-statement': 'error',
       'neos-eslint-plugin/no-space-before-paren'   : 'error'
@@ -68,9 +69,10 @@ module.exports = [...];
 ## ルール一覧
 
 - `blank-line-indent` : 空行にその行が属するブロックのインデント深さに合わせたスペースを入れる … Auto Fix 対応
+- `comment-colon-spacing` : 全角コロンを禁止し、半角コロンの前後にスペースを付与する … Auto Fix 対応
 - `doc-comment-format` : ドキュメンテーションコメントの空行の末尾にスペースを入れる … Auto Fix 対応
 - `newline-before-statement` : `else`・`else if`・`catch`・`finally`・`while` の直前に改行を入れる … Auto Fix 対応
-- `no-space-before-paren` : `if`・`else if`・`catch`・`for`・`switch`・`while` の直後のカッコとの間にスペースを開けない
+- `no-space-before-paren` : `if`・`else if`・`catch`・`for`・`switch`・`while` の直後のカッコとの間にスペースを開けない … Auto Fix 対応
 
 
 ## 開発

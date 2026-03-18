@@ -1,6 +1,7 @@
 import { Linter } from 'eslint';
 
 import { blankLineIndent } from './rules/blank-line-indent.js';
+import { commentColonSpacingRule } from './rules/comment-colon-spacing';
 import { docCommentFormat } from './rules/doc-comment-format.js';
 import { newlineBeforeStatement } from './rules/newline-before-statement.js';
 import { noSpaceBeforeParen } from './rules/no-space-before-paren.js';
@@ -11,6 +12,7 @@ const pluginName = 'neos-eslint-plugin' as const;
 /** ルール一覧 */
 const rules = {
   'blank-line-indent'       : blankLineIndent,
+  'comment-colon-spacing'   : commentColonSpacingRule,
   'doc-comment-format'      : docCommentFormat,
   'newline-before-statement': newlineBeforeStatement,
   'no-space-before-paren'   : noSpaceBeforeParen
@@ -23,7 +25,7 @@ export const configs = {
     plugins: { [pluginName]: { rules } },
     rules: Object.fromEntries(
       Object.entries(rules)
-        .filter(([_, rule]) => rule.meta!.docs!.recommended != null)  // eslint-disable-line @typescript-eslint/no-unused-vars
+        .filter(([_, rule]) => rule.meta!.docs!.recommended === true)  // eslint-disable-line @typescript-eslint/no-unused-vars
         .map(([name]) => [`${pluginName}/${name}`, 'error'])
     )
   } satisfies Linter.Config,
@@ -33,7 +35,7 @@ export const configs = {
     plugins: { [pluginName]: { rules } },
     rules: Object.fromEntries(
       Object.entries(rules)
-        .filter(([_, rule]) => rule.meta!.docs!.recommended != null)  // eslint-disable-line @typescript-eslint/no-unused-vars
+        .filter(([_, rule]) => rule.meta!.docs!.recommended === true)  // eslint-disable-line @typescript-eslint/no-unused-vars
         .map(([name]) => [`${pluginName}/${name}`, 'warn'])
     )
   } satisfies Linter.Config

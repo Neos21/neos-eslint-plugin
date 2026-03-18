@@ -83,8 +83,7 @@ export default defineConfig([
     // チェックしないディレクトリ・ファイルを指定する
     ignores: [
       'dist/**',
-      'node_modules/**',
-      'tests/**'
+      'node_modules/**'
     ]
   }
 ]);

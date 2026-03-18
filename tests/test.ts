@@ -5,7 +5,7 @@ import childProcess from 'node:child_process';
 const testFile = `
 /** テストファイル */
 const test = () => {
-  // 以下の行には本来2スペースインデントが必要です
+  // 以下の行には: 本来2スペースインデントが必要です
 
   /**
    * 以下のドキュメンテーションコメント行の行末には本来スペースが必要です
@@ -62,7 +62,7 @@ test();
 const expected = `
 /** テストファイル */
 const test = () => {
-  // 以下の行には本来2スペースインデントが必要です
+  // 以下の行には : 本来2スペースインデントが必要です
   
   /**
    * 以下のドキュメンテーションコメント行の行末には本来スペースが必要です
@@ -131,8 +131,8 @@ fs.writeFileSync(testFilePath, testFile, 'utf-8');
 try {
   childProcess.execSync(eslintCommand);
 }
-catch(error: any) {
-  console.error(error.stdout.toString());
+catch(error) {
+  console.error((error as { stdout: string; }).stdout.toString());
 }
 // Auto Fix する
 console.log(childProcess.execSync(`${eslintCommand} --fix`).toString());
