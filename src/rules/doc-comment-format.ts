@@ -29,7 +29,7 @@ export const docCommentFormat: Rule.RuleModule = {
           
           let tagLine = -1;
           for(let i = 0; i < lines.length; i++) {
-            if((/@\w+/).test(lines[i])) {  // `@param` などがあるか否かで修正するべき箇所かを判断している
+            if((/@param/).test(lines[i]) || (/@return/).test(lines[i]) || (/@throws/).test(lines[i])) {  // `@param` などがあるか否かで修正するべき箇所かを判断している
               tagLine = i;
               break;
             }

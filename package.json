@@ -19,7 +19,8 @@
   ],
   "scripts": {
     "build": "tsc --noEmit && tsup",
-    "test": "npm run build && npx tsx ./tests/test.ts",
+    "lint": "eslint ./src/ --fix",
+    "test": "tsx ./tests/test.ts",
     "eslint": "eslint",
     "tsc": "tsc",
     "tsup": "tsup"
@@ -42,11 +43,15 @@
     "eslint": ">=9.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "10.0.1",
     "@types/eslint": "9.6.1",
     "@types/node": "25.4.0",
     "eslint": "10.0.3",
+    "globals": "17.4.0",
     "jiti": "2.6.1",
     "tsup": "8.5.1",
-    "typescript": "5.9.3"
+    "tsx": "4.21.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.57.1"
   }
 }

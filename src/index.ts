@@ -23,9 +23,9 @@ export const configs = {
     plugins: { [pluginName]: { rules } },
     rules: Object.fromEntries(
       Object.entries(rules)
-        .filter(([, rule]) => rule.meta!.docs!.recommended)
+        .filter(([_, rule]) => rule.meta!.docs!.recommended != null)  // eslint-disable-line @typescript-eslint/no-unused-vars
         .map(([name]) => [`${pluginName}/${name}`, 'error'])
-    ),
+    )
   } satisfies Linter.Config,
   
   /** 警告のみ表示 */
@@ -33,10 +33,10 @@ export const configs = {
     plugins: { [pluginName]: { rules } },
     rules: Object.fromEntries(
       Object.entries(rules)
-        .filter(([, rule]) => rule.meta!.docs!.recommended)
+        .filter(([_, rule]) => rule.meta!.docs!.recommended != null)  // eslint-disable-line @typescript-eslint/no-unused-vars
         .map(([name]) => [`${pluginName}/${name}`, 'warn'])
-    ),
-  } satisfies Linter.Config,
+    )
+  } satisfies Linter.Config
 };
 
 /** プラグイン定義 : `export default` する */

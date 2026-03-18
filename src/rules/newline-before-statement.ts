@@ -19,7 +19,7 @@ export const newlineBeforeStatement: Rule.RuleModule = {
       const loc = node.loc as ESTree.SourceLocation;
       const line = sourceCode.lines[loc.start.line - 1] ?? '';
       const match = line.match((/^(\s*)/));
-      return match ? match[1] : '';
+      return match != null ? match[1] : '';
     };
     
     /**
