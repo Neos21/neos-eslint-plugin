@@ -24,12 +24,12 @@ export const commentColonSpacingRule: Rule.RuleModule = {
           allowFullWidth: {
             type: 'boolean',
             default: false,
-            description: '全角コロン（：）の使用を許可するか否か (デフォルト : false)'
+            description: '全角コロンの使用を許可するか否か (デフォルト : false)'
           },
           requireSpaceBefore: {
             type: 'boolean',
             default: true,
-            description: '半角コロンの前にスペースを要求するか否か (デフォルト : true)・false で「文字: 文字」形式も許容する'
+            description: '半角コロンの前にスペースを要求するか否か (デフォルト : true)・false で「文字: 文字」形式も許容する'  // eslint-disable-line neos-eslint-plugin/comment-colon-spacing
           },
           checkStrings: {
             type: 'boolean',
@@ -41,10 +41,10 @@ export const commentColonSpacingRule: Rule.RuleModule = {
       }
     ],
     messages: {
-      noFullWidthColon: '全角コロン (：) は使用禁止です。半角コロン (:) を使用してください',
+      noFullWidthColon: '全角コロンは使用禁止です。半角コロンを使用してください',
       noSpaceBeforeColon: 'コロンの前にスペースを入れてください (推奨形式 : 「文字 : 文字」)',
       noSpaceAfterColon: 'コロンの後にスペースを入れてください (推奨形式 : 「文字 : 文字」)',
-      noFullWidthColonInString: '文字列内の全角コロン (：) は使用禁止です。半角コロン (:) を使用してください',
+      noFullWidthColonInString: '文字列内の全角コロンは使用禁止です。半角コロンを使用してください',
       noSpaceBeforeColonInString: '文字列内のコロンの前にスペースを入れてください (推奨形式 : 「文字 : 文字」)',
       noSpaceAfterColonInString: '文字列内のコロンの後にスペースを入れてください (推奨形式 : 「文字 : 文字」)'
     },
@@ -57,7 +57,7 @@ export const commentColonSpacingRule: Rule.RuleModule = {
     const options: RuleOptions = (context.options[0] as RuleOptions) ?? {};
     const sourceCode: SourceCode = context.sourceCode;
     
-    /** URL スキームパターン（`://` や `//`）を除外するため、コロンが URL の一部か否かを判定する */
+    /** URL スキームパターン (`://` や `//`) を除外するため、コロンが URL の一部か否かを判定する */
     const isUrlColon = (text: string, colonIndex: number): boolean => {
       // `://` パターン : コロンの後に `//` が続く
       if(text.slice(colonIndex + 1, colonIndex + 3) === '//') return true;
@@ -71,7 +71,8 @@ export const commentColonSpacingRule: Rule.RuleModule = {
       
       for(let i = 0; i < text.length; i++) {
         const ch = text[i];
-        const isFullWidth = ch === '\uff1a';  // `：`
+        // 全角コロン
+        const isFullWidth = ch === '\uff1a';  // eslint-disable-line neos-eslint-plugin/comment-colon-spacing
         const isHalfWidth = ch === ':';
         
         if(!isFullWidth && !isHalfWidth) continue;
@@ -85,6 +86,7 @@ export const commentColonSpacingRule: Rule.RuleModule = {
       return matches;
     };
     
+    /* eslint-disable neos-eslint-plugin/comment-colon-spacing */
     /**
      * コロン位置を解析し、違反の種類を返す
      * 
@@ -98,6 +100,7 @@ export const commentColonSpacingRule: Rule.RuleModule = {
      * - 「文字 : 文字」正しい形式
      * - 文末「文字:」「文字 :」(後ろに何もない)
      */
+    /* eslint-enable */
     const analyzeColonPosition = (text: string, colonIndex: number, isFullWidth: boolean, options: RuleOptions): { type: 'fullwidth' | 'no-space-before' | 'no-space-after' } | null => {
       const { allowFullWidth = false, requireSpaceBefore = true } = options;
       
@@ -118,7 +121,7 @@ export const commentColonSpacingRule: Rule.RuleModule = {
       
       // 前が非スペース → no-space-before (後ろが文字でもスペースでも違反)
       // ただし後ろが行末 (nextChar===null) のみの場合はスキップ
-      if(prevIsNonSpace && nextChar === null) return null;  // 「文字:」文末
+      if(prevIsNonSpace && nextChar === null) return null;  // 「文字コロン」文末
       
       if(prevIsNonSpace) return { type: 'no-space-before' };
       
@@ -135,7 +138,7 @@ export const commentColonSpacingRule: Rule.RuleModule = {
       
       for(const { index, isFullWidth } of colons) {
         const violation = analyzeColonPosition(commentValue, index, isFullWidth, options);
-        if(!violation) continue;
+        if(violation == null) continue;
         
         const absoluteIndex = contentStartOffset + index;
         const loc = sourceCode.getLocFromIndex(absoluteIndex);
@@ -147,14 +150,14 @@ export const commentColonSpacingRule: Rule.RuleModule = {
             fix: fixer => fixer.replaceTextRange([absoluteIndex, absoluteIndex + 1], ':')
           });
         }
-        else if (violation.type === 'no-space-before') {
+        else if(violation.type === 'no-space-before') {
           context.report({
             loc,
             messageId: 'noSpaceBeforeColon',
             fix: fixer => fixer.replaceTextRange([absoluteIndex, absoluteIndex], ' ')
           });
         }
-        else if (violation.type === 'no-space-after') {
+        else if(violation.type === 'no-space-after') {
           context.report({
             loc,
             messageId: 'noSpaceAfterColon',
@@ -173,7 +176,7 @@ export const commentColonSpacingRule: Rule.RuleModule = {
       
       for(const { index, isFullWidth } of colons) {
         const violation = analyzeColonPosition(content, index, isFullWidth, options);
-        if(!violation) continue;
+        if(violation == null) continue;
         
         const absoluteIndex = contentStartOffset + index;
         const loc = sourceCode.getLocFromIndex(absoluteIndex);
@@ -185,14 +188,14 @@ export const commentColonSpacingRule: Rule.RuleModule = {
             fix: fixer => fixer.replaceTextRange([absoluteIndex, absoluteIndex + 1], ':')
           });
         }
-        else if (violation.type === 'no-space-before') {
+        else if(violation.type === 'no-space-before') {
           context.report({
             loc,
             messageId: 'noSpaceBeforeColonInString',
             fix: fixer => fixer.replaceTextRange([absoluteIndex, absoluteIndex], ' ')
           });
         }
-        else if (violation.type === 'no-space-after') {
+        else if(violation.type === 'no-space-after') {
           context.report({
             loc,
             messageId: 'noSpaceAfterColonInString',
@@ -203,34 +206,34 @@ export const commentColonSpacingRule: Rule.RuleModule = {
     };
     
     return {
-      Program: () => {
+      Program: (): void => {
         const comments = sourceCode.getAllComments() as Array<Comment>;
         
         for(const comment of comments) {
-          if(!comment.range) continue;
+          if(comment.range == null) continue;
           
           if(comment.type === 'Line') {
             // `//` の2文字分のオフセット
             const contentStart = comment.range[0] + 2;
             checkComment(comment.value, contentStart);
           }
-          else if (comment.type === 'Block') {
+          else if(comment.type === 'Block') {
             // `/*` の2文字分のオフセット
             const contentStart = comment.range[0] + 2;
             checkComment(comment.value, contentStart);
           }
         }
       },
-      Literal: node => {
-        if(typeof node.value !== 'string' || !node.range || node.raw === undefined) return;
+      Literal: (node): void => {
+        if(typeof node.value !== 'string' || node.range == null || node.raw === undefined) return;
         
         // クォート文字 (1文字) 分のオフセット
         const contentStart = node.range[0] + 1;
         checkStringContent(node.value, contentStart);
       },
-      TemplateLiteral: node => {
+      TemplateLiteral: (node): void => {
         for(const quasi of node.quasis) {
-          if(!quasi.range) continue;
+          if(quasi.range == null) continue;
           const cooked = quasi.value.cooked;
           if(cooked === null || cooked === undefined) continue;
           // テンプレートリテラルのバッククォート/式区切りのオフセット

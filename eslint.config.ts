@@ -4,6 +4,9 @@ import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
+// ビルドした自分自身を利用する
+import neosEslintPlugin from '../dist/index.mjs';
+
 export default defineConfig([
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
@@ -79,9 +82,15 @@ export default defineConfig([
       ]
     }
   },
+  
+  // ビルドした自分自身を利用する
+  neosEslintPlugin.configs.recommended,
+  
   {
     // チェックしないディレクトリ・ファイルを指定する
     ignores: [
+      "eslint.config.ts",
+      "tsup.config.ts",
       'dist/**',
       'node_modules/**'
     ]

@@ -4,6 +4,7 @@ import { defineConfig } from 'tsup';
 export default defineConfig({
   // エントリポイント
   entry: ['src/index.ts'],
+  // 除外
   external: ['tests'],
   // 出力フォーマット
   format: ['esm', 'cjs'],

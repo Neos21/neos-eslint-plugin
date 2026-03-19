@@ -108,7 +108,7 @@ export const newlineBeforeStatement: Rule.RuleModule = {
       // if・else if・else
       IfStatement: handleIfStatement,
       // else (非 IfStatement の alternate) : alternate が BlockStatement や ExpressionStatement の場合
-      'IfStatement:exit': handleIfStatementExit,
+      'IfStatement:exit': handleIfStatementExit,  // eslint-disable-line neos-eslint-plugin/comment-colon-spacing
       // catch
       CatchClause: handleCatchClause,
       // finally

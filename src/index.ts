@@ -2,6 +2,7 @@ import { Linter } from 'eslint';
 
 import { blankLineIndent } from './rules/blank-line-indent.js';
 import { commentColonSpacingRule } from './rules/comment-colon-spacing';
+import { commentParenSpacingRule } from './rules/comment-paren-spacing.js';
 import { docCommentFormat } from './rules/doc-comment-format.js';
 import { newlineBeforeStatement } from './rules/newline-before-statement.js';
 import { noSpaceBeforeParen } from './rules/no-space-before-paren.js';
@@ -13,6 +14,7 @@ const pluginName = 'neos-eslint-plugin' as const;
 const rules = {
   'blank-line-indent'       : blankLineIndent,
   'comment-colon-spacing'   : commentColonSpacingRule,
+  'comment-paren-spacing'   : commentParenSpacingRule,
   'doc-comment-format'      : docCommentFormat,
   'newline-before-statement': newlineBeforeStatement,
   'no-space-before-paren'   : noSpaceBeforeParen

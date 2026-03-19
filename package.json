@@ -19,7 +19,8 @@
   ],
   "scripts": {
     "build": "tsc --noEmit && tsup",
-    "lint": "eslint ./src/ --fix",
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix",
     "test": "npm run build && tsx ./tests/test.ts",
     "eslint": "eslint",
     "tsc": "tsc",
