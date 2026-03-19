@@ -57,15 +57,52 @@ export const commentColonSpacingRule: Rule.RuleModule = {
     const options: RuleOptions = (context.options[0] as RuleOptions) ?? {};
     const sourceCode: SourceCode = context.sourceCode;
     
-    /** URL スキームパターン (`://` や `//`) を除外するため、コロンが URL の一部か否かを判定する */
-    const isUrlColon = (text: string, colonIndex: number): boolean => {
-      // `://` パターン : コロンの後に `//` が続く
+    /* eslint-disable neos-eslint-plugin/comment-colon-spacing */
+    /**
+     * コロンが URL・モジュールスキーム・Windows パスの一部か否かを判定する
+     * 
+     * スキップ対象 :
+     * - `://` パターン (`https://`・`http://` など)
+     * - RFC 3986 スキーム形式 `識別子:識別子` で前後が ASCII 英数字のみ (`node:fs`・`node:path` など)
+     * - Windows ドライブレター `[A-Za-z]:[\\\/]` (`C:\PATH`・`D:/dir` など)
+     */
+    /* eslint-enable */
+    const isSchemeColon = (text: string, colonIndex: number): boolean => {
+      // `://` パターン
       if(text.slice(colonIndex + 1, colonIndex + 3) === '//') return true;
+      
+      // Windows ドライブレター : 直前が英字 1 文字・直後が `\` または `/`
+      // かつドライブレターの前が区切り文字 (行頭・スペース・クォートなど) である場合のみ
+      if(colonIndex >= 1) {
+        const driveLetter = text[colonIndex - 1];
+        const afterColon  = colonIndex + 1 < text.length ? text[colonIndex + 1] : null;
+        const beforeDrive = colonIndex >= 2 ? text[colonIndex - 2] : null;
+        const isDriveSeparated =
+          beforeDrive === null ||
+          beforeDrive === ' '  ||
+          beforeDrive === '\t' ||
+          beforeDrive === '\n' ||
+          beforeDrive === '\'' ||
+          beforeDrive === '"'  ||
+          beforeDrive === '`';
+        if(
+          /^[A-Za-z]$/.test(driveLetter) &&
+          (afterColon === '\\' || afterColon === '/') &&
+          isDriveSeparated
+        ) return true;
+      }
+      
+      // RFC 3986 スキーム形式 : 前が `[a-zA-Z][a-zA-Z0-9+\-.]*`・後ろが ASCII 英数字列
+      // 日本語など非 ASCII が前後にある場合はスキームとみなさない
+      const schemePattern = /^[a-zA-Z][a-zA-Z0-9+\-.]*$/;
+      const beforeWord = text.slice(0, colonIndex).match(/([a-zA-Z][a-zA-Z0-9+\-.]*)$/);
+      const afterWord  = text.slice(colonIndex + 1).match(/^([a-zA-Z0-9_\-/.]+)/);
+      if(beforeWord != null && afterWord != null && schemePattern.test(beforeWord[1])) return true;
+      
       return false;
     };
     
-    /** テキスト中のコロン (全角・半角) をすべて検出する (URL を除く)
-     */
+    /** テキスト中のコロン (全角・半角) をすべて検出する (URL・スキーム・Windows パスを除く) */
     const findColonsInText = (text: string): Array<ColonMatch> => {
       const matches: Array<ColonMatch> = [];
       
@@ -77,8 +114,8 @@ export const commentColonSpacingRule: Rule.RuleModule = {
         
         if(!isFullWidth && !isHalfWidth) continue;
         
-        // URL の `://` パターンはスキップ
-        if(isHalfWidth && isUrlColon(text, i)) continue;
+        // スキーム・Windows パスのコロンはスキップ
+        if(isHalfWidth && isSchemeColon(text, i)) continue;
         
         matches.push({ index: i, isFullWidth });
       }
@@ -111,8 +148,8 @@ export const commentColonSpacingRule: Rule.RuleModule = {
       const prevChar = colonIndex > 0 ? text[colonIndex - 1] : null;
       const nextChar = colonIndex < text.length - 1 ? text[colonIndex + 1] : null;
       
-      const prevIsSpace = prevChar === null || prevChar === ' ' || prevChar === '\t' || prevChar === '\n';
-      const nextIsSpace = nextChar === null || nextChar === ' ' || nextChar === '\t' || nextChar === '\n';
+      const prevIsSpace    = prevChar === null || prevChar === ' ' || prevChar === '\t' || prevChar === '\n';
+      const nextIsSpace    = nextChar === null || nextChar === ' ' || nextChar === '\t' || nextChar === '\n';
       const prevIsNonSpace = !prevIsSpace;
       const nextIsNonSpace = !nextIsSpace;
       

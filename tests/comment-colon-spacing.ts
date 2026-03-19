@@ -70,6 +70,30 @@ tester.run('comment-colon-spacing', commentColonSpacingRule, {
       name: 'checkStrings=false : テンプレートリテラル内も無視',
       code: 'const s = `項目: 説明`;',
       options: [{ checkStrings: false }]
+    },
+    
+    // `node:` モジュールスキーム
+    {
+      name: 'node:fs のようなモジュールスキームはスキップ',
+      code: "import { existsSync } from 'node:fs';"
+    },
+    {
+      name: 'node:path もスキップ',
+      code: 'const x = "node:crypto";'
+    },
+    
+    // Windows パス
+    {
+      name: 'Windows パス (バックスラッシュ) はスキップ',
+      code: String.raw`const p = "C:\PATH\TO\file.txt";`
+    },
+    {
+      name: 'Windows パス (スラッシュ) はスキップ',
+      code: 'const p = "C:/PATH/TO/file.txt";'
+    },
+    {
+      name: '単一行コメント : Windows パスの言及はスキップ',
+      code: String.raw`// パス C:\PATH\TO\file.txt を参照`
     }
   ],
   
@@ -146,7 +170,7 @@ tester.run('comment-colon-spacing', commentColonSpacingRule, {
       code: '// 項目：説明 キー: 値',
       errors: [
         { messageId: 'noFullWidthColon' },
-        { messageId: 'noSpaceBeforeColon' },
+        { messageId: 'noSpaceBeforeColon' }
       ],
       output: '// 項目:説明 キー : 値'
     }
