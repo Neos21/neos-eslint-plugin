@@ -9,7 +9,9 @@ import neosEslintPlugin from '../dist/index.mjs';
 
 export default defineConfig([
   {
-    files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    files: [
+      '**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'
+    ],
     plugins: {
       js,  // 標準ルール
       //import: importPlugin
@@ -19,7 +21,8 @@ export default defineConfig([
       globals: { ...globals.browser, ...globals.node },
       // TypeScript ルールを厳格化した時に `@typescript-eslint/await-thenable` 絡みでエラーが出るのを回避する https://stackoverflow.com/questions/58510287/parseroptions-project-has-been-set-for-typescript-eslint-parser
       parserOptions: {
-        project: true,
+        // ESLint 用の `tsconfig` を参照させる
+        project: './tsconfig.eslint.json',
         tsconfigRootDir: import.meta.dirname
       }
     },
@@ -91,6 +94,7 @@ export default defineConfig([
     ignores: [
       "eslint.config.ts",
       "tsup.config.ts",
+      'tests/test-file.ts',
       'dist/**',
       'node_modules/**'
     ]

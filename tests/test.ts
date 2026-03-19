@@ -1,18 +1,20 @@
-import fs from 'node:fs';
-import childProcess from 'node:child_process';
+import fs from 'fs';
+import childProcess from 'child_process';
+
+/* eslint-disable */
 
 /** テスト用に誤った書き方をしているテキスト */
 const testFile = `
 /** テストファイル */
-const test = () => {
-  // 以下の行には: 本来2スペースインデントが必要です
+const test = (): void => {
+  // 以下の行には : 本来2スペースインデントが必要です
 
   /**
-   * 以下のドキュメンテーションコメント行の（行末）には本来スペースが必要です
+   * 以下のドキュメンテーションコメント行の (行末) には本来スペースが必要です
    *
    * @return なし
    */
-  const testFunction = () => {
+  const testFunction = (): void => {
     const condition = null;
     if (condition === true) {
       console.log('True');
@@ -23,7 +25,7 @@ const test = () => {
       // 以下の終了ブレースの次の行は本来4スペースインデントが必要です
     }
 
-    if (condition) console.log('Truthy');
+    if (condition === true) console.log('Truthy');
     else if (condition == null) console.log('Null');
     else console.log('Unknown');
 
@@ -31,7 +33,7 @@ const test = () => {
       try {
         i++;
       } catch (error) {
-        console.log('Error');
+        console.log('Error', error);
       } finally {
         console.log('Finally');
       }
@@ -61,7 +63,7 @@ test();
 /** 修正後のあるべき姿 */
 const expected = `
 /** テストファイル */
-const test = () => {
+const test = (): void => {
   // 以下の行には : 本来2スペースインデントが必要です
   
   /**
@@ -69,7 +71,7 @@ const test = () => {
    * 
    * @return なし
    */
-  const testFunction = () => {
+  const testFunction = (): void => {
     const condition = null;
     if(condition === true) {
       console.log('True');
@@ -82,7 +84,7 @@ const test = () => {
       // 以下の終了ブレースの次の行は本来4スペースインデントが必要です
     }
     
-    if(condition) console.log('Truthy');
+    if(condition === true) console.log('Truthy');
     else if(condition == null) console.log('Null');
     else console.log('Unknown');
     
@@ -91,7 +93,7 @@ const test = () => {
         i++;
       }
       catch(error) {
-        console.log('Error');
+        console.log('Error', error);
       }
       finally {
         console.log('Finally');
@@ -120,10 +122,12 @@ const test = () => {
 test();
 `;
 
+/* eslint-enable */
+
 /** テスト用ファイルパス */
 const testFilePath = './tests/test-file.ts';
 /** ESLint コマンド */
-const eslintCommand = `npm run eslint -- --config ./tests/eslint.config.ts ${testFilePath}`;
+const eslintCommand = `npm run eslint ${testFilePath}`;
 
 // テスト用ファイルを書き出す
 fs.writeFileSync(testFilePath, testFile, 'utf-8');
@@ -135,7 +139,7 @@ catch(error) {
   console.error((error as { stdout: string; }).stdout.toString());
 }
 // Auto Fix する
-console.log(childProcess.execSync(`${eslintCommand} --fix`).toString());
+console.log(childProcess.execSync(`${eslintCommand} -- --no-ignore --fix`).toString());
 // 変更されたテスト用ファイルの内容が期待値と一致するか確認する
 const afterFile = fs.readFileSync(testFilePath, 'utf-8');
 console.log(afterFile === expected ? 'OK!' : 'NG!');

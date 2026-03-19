@@ -3,6 +3,7 @@ import { Linter } from 'eslint';
 import { blankLineIndent } from './rules/blank-line-indent.js';
 import { commentColonSpacingRule } from './rules/comment-colon-spacing';
 import { commentParenSpacingRule } from './rules/comment-paren-spacing.js';
+import { docCommentBlankLines } from './rules/doc-comment-blank-lines.js';
 import { docCommentFormat } from './rules/doc-comment-format.js';
 import { newlineBeforeStatement } from './rules/newline-before-statement.js';
 import { noSpaceBeforeParen } from './rules/no-space-before-paren.js';
@@ -15,6 +16,7 @@ const rules = {
   'blank-line-indent'       : blankLineIndent,
   'comment-colon-spacing'   : commentColonSpacingRule,
   'comment-paren-spacing'   : commentParenSpacingRule,
+  'doc-comment-blank-lines' : docCommentBlankLines,
   'doc-comment-format'      : docCommentFormat,
   'newline-before-statement': newlineBeforeStatement,
   'no-space-before-paren'   : noSpaceBeforeParen

@@ -15,9 +15,7 @@ export const docCommentFormat: Rule.RuleModule = {
     const source = context.sourceCode;
     
     return {
-      /**
-       * Program ノードからドキュメンテーションコメントを検査する
-       */
+      /** Program ノードからドキュメンテーションコメントを検査する */
       Program: (): void => {
         const comments = source.getAllComments();
         for(const comment of comments) {

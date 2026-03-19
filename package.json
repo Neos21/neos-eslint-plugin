@@ -24,6 +24,7 @@
     "test": "npm run build && tsx ./tests/test.ts",
     "eslint": "eslint",
     "tsc": "tsc",
+    "tsx": "tsx",
     "tsup": "tsup"
   },
   "author": "Neo <neos21@gmail.com> (https://neos21.net/)",

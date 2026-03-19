@@ -2,7 +2,7 @@
   // 型チェック対象とするファイル
   "include": ["src/**/*"],
   // 型チェック対象外とするディレクトリ
-  "exclude": ["node_modules", "dist", "tests"],
+  "exclude": ["node_modules", "dist"],
   "compilerOptions": {
     // コンパイル時に使用する標準ライブラリ
     "lib": ["ES2020"],

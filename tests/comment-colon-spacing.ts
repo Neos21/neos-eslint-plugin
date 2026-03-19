@@ -8,6 +8,7 @@ const tester = new RuleTester({
   }
 });
 
+/* eslint-disable */
 tester.run('comment-colon-spacing', commentColonSpacingRule, {
   valid: [
     // デフォルトオプション : 正しい形式 (文字 : 文字)
@@ -151,5 +152,6 @@ tester.run('comment-colon-spacing', commentColonSpacingRule, {
     }
   ]
 });
+/* eslint-enable */
 
 console.log('すべてのテストが通りました！');

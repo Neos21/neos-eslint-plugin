@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "./",  // rootDir の制約を解除
+    "noEmit": true    // ESLint 用なのでファイル出力は不要
+  },
+  "include": [
+    "src/**/*",
+    "tests/**/*",
+    "eslint.config.ts"
+  ]
+}

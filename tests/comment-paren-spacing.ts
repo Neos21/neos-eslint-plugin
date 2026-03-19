@@ -1,6 +1,6 @@
 import { RuleTester } from 'eslint';
 
-import commentParenSpacingRule from '../src/rules/comment-paren-spacing';
+import { commentParenSpacingRule } from '../src/rules/comment-paren-spacing';
 
 const tester = new RuleTester({
   languageOptions: {
@@ -9,6 +9,7 @@ const tester = new RuleTester({
   }
 });
 
+/* eslint-disable */
 tester.run('comment-paren-spacing', commentParenSpacingRule, {
   valid: [
     // 半角カッコ : 既に正しい形式
@@ -140,5 +141,6 @@ tester.run('comment-paren-spacing', commentParenSpacingRule, {
     }
   ]
 });
+/* eslint-enable */
 
 console.log('すべてのテストが通りました！');
