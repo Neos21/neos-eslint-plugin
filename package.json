@@ -1,6 +1,6 @@
 {
   "name": "@neos21/neos-eslint-plugin",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Neo's ESLint Plugins",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
